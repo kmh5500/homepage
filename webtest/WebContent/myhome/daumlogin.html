@@ -1,0 +1,163 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta charset="UTF-8" />
+<title></title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
+   <style type="text/css">
+        /* reset */
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button{margin:0;padding:0}
+        fieldset,img{border:0 none}
+        dl,ul,ol,menu,li{list-style:none}
+        blockquote, q{quotes: none}
+        blockquote:before, blockquote:after,q:before, q:after{content:'';content:none}
+        input,select,textarea,button{border-radius:0;vertical-align:middle} /* 2017-11-14 수정 */
+        input::-ms-clear{display:none}
+        button{border:0 none;background-color:transparent;cursor:pointer}
+        body,th,td,input,select,textarea,button{font-size:12px;line-height:1.5;font-family:'Apple SD Gothic Neo',AppleSDGothicNeo,'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif;color:#222}
+        a{color:#222;text-decoration:none}
+        a:hover{color:#118eff;text-decoration:underline}
+        a:active{background-color:transparent}
+        address,caption,cite,code,dfn,em,var{font-style:normal;font-weight:normal}
+
+        /* global */
+        .ir_wa{display:block;overflow:hidden;position:relative;z-index:-1;width:100%;height:100%} /* 중요한 이미지 대체텍스트로 이미지off시에도 대체 텍스트를 보여주고자 할때 */
+        .screen_out{overflow:hidden;position:absolute;width:0;height:0;line-height:0;text-indent:-9999px} /* 대체텍스트가 아닌 접근성을 위한 숨김텍스트를 제공할때 */
+        .show{display:block}
+        .hide{display:none}
+
+        /* 공통 */
+        .ico_login{background:url(//t1.daumcdn.net/daumtop_deco/images/top/2017/ico_login.png) no-repeat}
+        .bg_login{background:url(//t1.daumcdn.net/daumtop_deco/images/top/2017/bg_login.png) no-repeat}
+
+        /* loginbox */
+        .box_user{position:relative;z-index:0;width:300px;height:120px;background-position:0 0}
+        .login_inp{display:inline;float:left;width:200px;height:55px;margin:33px 0 0 15px}
+        .login_inp .lab_login{overflow:hidden;position:absolute;left:15px;width:185px;height:26px;padding-left:12px;font-size:12px;line-height:26px;color:#888;letter-spacing:-1px;cursor:text} /* 2017-03-07 수정 */
+        .login_inp .lab_id{top:34px}
+        .login_inp .screen_out{left:-9999px}
+        .login_inp .txt_labid{color:#d5d4d8}
+        .login_inp .lab_pw{top:60px;height:27px;line-height:26px}
+        .login_inp .tf_login{display:block;width:185px;height:25px;padding-left:12px;border:1px solid transparent;line-height:24px;color:#222;background-color:transparent;ime-mode:disabled} /* 2017-03-07 수정 */
+        .login_inp input:-webkit-autofill{height:26px}
+        .login_inp .tf_pw{line-height:18px} /* 2017-03-07 수정 */
+        .login_set{position:absolute;top:0;left:15px;width:270px;height:30px;font-size:11px;line-height:14px;letter-spacing:-1px}
+        .login_set .info_check{float:left}
+        .login_set .focus_on{outline:1px dotted #000;outline:-webkit-focus-ring-color auto 5px}
+        .login_set .inp_steady{position:absolute;left:0;top:9px;width:15px;height:15px;border:0 none;z-index:-1}
+        .login_set .lab_steady{float:left;margin-top:8px;padding-left:18px;line-height:15px;color:#555;cursor:pointer}
+        .login_set .lab_steady .ico_check{position:absolute;left:0;top:9px;z-index:1;width:15px;height:15px;background-position:0 0;background-color:transparent}
+        .login_set .lab_checked .ico_check{background-position:0 -25px}
+        .login_set .check_security{float:left;margin-top:8px;padding-left:13px}
+        .login_set .link_protect{float:left;font-weight:bold;color:#555}
+        .login_set .btn_security{overflow:hidden;float:left;height:12px;padding-right:2px;margin-left:3px;font-weight:bold;font-size:11px;line-height:normal;color:#118eff;vertical-align:top} /* 2017-03-23 수정 */
+        .box_user .check_off .btn_security{color:#222}
+
+        .login_set .layer_steady{position:absolute;top:0;left:85px;width:200px;height:88px;background-position:0 -130px;background-color:transparent;letter-spacing:-0.12em}
+        .login_set .layer_steady .cont_layer{padding:14px 0 0 15px;margin:1px 26px 0 1px;background-color:#fff}
+        .login_set .layer_steady .txt_notice{padding-bottom:8px;font-weight:bold;font-size:12px;line-height:16px;color:#555}
+        .login_set .layer_steady .link_help{padding-right:8px;font-size:11px;color:#555;background-position:100% -71px} /* 2017-03-07 수정 */
+        .login_set .layer_steady .btn_close{overflow:hidden;position:absolute;right:6px;top:6px;width:20px;height:20px;letter-spacing:1px}
+
+        .box_user .btn_login{overflow:hidden;float:left;width:70px;height:55px;margin-top:33px;font-weight:bold;line-height:55px;background-color:transparent;background-position:-210px -130px}
+        .box_user .list_user{overflow:hidden;width:270px;padding:6px 0 0 15px;font-size:11px;line-height:14px;letter-spacing:-1px}
+        .box_user .list_user li{overflow:hidden;float:left;padding:0 0 1px 10px} /* 2017-03-24 수정 */
+        .box_user .list_user .fst{padding-left:1px}
+        .box_user .list_user .link_join{color:#555}
+        .box_user .list_user .link_find{float:left;color:#555}
+        .box_user .list_user .find_pw{display:inline;padding-left:2px}
+        .box_user .list_user .ico_dot{float:left;display:inline;padding-left:2px;color:#555}
+        .box_user .list_user .link_kakao{display:block;padding-left:15px;background-position:0 -47px;color:#555}
+        .box_user .txt_info{display:block;padding:7px 0 9px;font-size:11px;color:#555;letter-spacing:-0.12em}
+        .login_simple{width:270px;padding:0 15px;background-position:0 -230px}
+        .login_simple .btn_login{display:block;width:270px;height:55px;margin:0;background-position:0 -360px}
+        .login_simple .list_user{padding:7px 0 0}
+        .login_simple .list_user .link_kakao{background-position:0 -48px}
+
+        /* .os_mac .login_inp .lab_login, .os_mac .login_inp .tf_login{line-height:29px;letter-spacing:0} 2017-03-07 삭제 */
+        .os_mac .login_inp .lab_login{line-height:29px;letter-spacing:0} /* 2017-03-07 추가 */
+        .os_mac .login_set{letter-spacing:0}
+        .os_mac .login_set .lab_steady{margin-top:10px}
+        .os_mac .login_set .link_protect{margin-top:3px}
+        .os_mac .login_set .btn_security{overflow:hidden;float:left;margin-top:3px}
+        .os_mac .box_user .list_user{padding-top:9px;line-height:14px;letter-spacing:0}
+        .os_mac .list_user li{padding-left:13px}
+        .os_mac .list_user .link_kakao{background-position:0 -50px}
+        .os_mac .login_set .layer_steady{letter-spacing:0}
+        .os_mac .layer_steady .cont_layer{padding-top:17px}
+        .os_mac .layer_steady .link_help{letter-spacing:-0.02em;background-position:100% -73px} /* 2017-03-07 수정 */
+        .os_mac .box_user .txt_info{padding:10px 0 7px;letter-spacing:0}
+
+        @media
+        only screen and (-webkit-min-device-pixel-ratio: 1.5),
+        only screen and (min-device-pixel-ratio: 1.5),
+        only screen and (min-resolution: 1.5dppx) {
+            .ico_login{background-image:url(//t1.daumcdn.net/daumtop_deco/images/top/2017/rtn/ico_login.png);-webkit-background-size:20px 100px;background-size:20px 100px}
+            .bg_login{background-image:url(//t1.daumcdn.net/daumtop_deco/images/top/2017/rtn/bg_login.png);-webkit-background-size:300px 420px;background-size:300px 420px}
+        }	</style>
+  <script type="text/javascript" src="https://t1.daumcdn.net/id/statics/common/js-lib/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="https://t1.daumcdn.net/id/statics/common/js-lib/jquery.cookie-1.3.1.min.js"></script>
+    <script type="text/javascript" src="/contents/min/js/login-top.js"></script>
+    <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+<div class="bg_login box_user"> <!-- 2017-02-15 수정, bg_login으로 클래스명 변경 -->
+    <h2 id="loginInfoTitle" class="screen_out" tabindex="0">로그인 정보</h2>
+    <form id="loginForm" name="loginform" accept-charset="utf-8" method="post" action="https://logins.daum.net/accounts/login.do" autocomplete="off">
+        <input type="hidden" name="url" value="https://www.daum.net">
+        <input type="hidden" name="slevel" value="1" />
+        <input type="hidden" name="fuid" value="hlzaljYHiISM3LnUCCGfDl9WuqkpzTGTzMEjfmGr9mdsi1noERbbGaSKvPfFZ2rBXZwJLej_iAlaOGwlY0JiaCCWR9USARifbO9ea0Ezlbu1MxL_g"/>
+        <fieldset class="#logoff">
+            <legend class="screen_out">로그인 및 관련 설정</legend>
+            <div class="login_inp">
+                <label class="lab_login lab_id " for="id">아이디</label><!-- 텍스트 입력시 screen_out 추가 -->
+                <input type="text" id="id" name="id" class="tf_login"  maxlength="50" tabindex="1">
+                <label class="lab_login lab_pw " for="inputPwd">비밀번호</label><!-- 텍스트 입력시 screen_out 추가 -->
+                <input type="password" id="inputPwd" name="pw" class="tf_login tf_pw" maxlength="32" tabindex="2">
+            </div>
+            <button type="submit" id="loginSubmit" class="bg_login btn_login #loginbtn" tabindex="3" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'login_daum']);"><span class="ir_wa">로그인</span></button><!-- 2017-02-15 수정, bg_login으로 클래스명 변경 -->
+            <div class="login_set">
+                <!-- 2017-02-15 수정 시작, 마크업 구조 변경 -->
+                <span class="info_check">
+					<input type="checkbox" id="stln" name="stln" class="inp_steady" tabindex="4" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'stln']);">
+                    <label id="lbStln" class="lab_steady " for="stln" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'stln']);"><!-- 로그인 상태 유지 체크 상태 lab_checked 추가 -->
+                        <span class="ico_login ico_check"></span><!-- 2017-02-15 수정, ico_login으로 클래스명 변경 --><!-- 포커스시 focus_on 클래스 추가 -->로그인 상태 유지
+                    </label>
+                </span>
+                <!-- //2017-02-15 수정 끝, 마크업 구조 변경 -->
+                <div id="lbStlnNoti" class="bg_login layer_steady  hide "><!-- 2017-02-15 수정, bg_login으로 클래스명 변경 --><!-- 레이어 오픈시 hide 삭제 -->
+                        <div class="cont_layer">
+                            <p class="txt_notice">개인정보 보호를 위해<br>개인 PC에서만 사용해 주세요.</p>
+                            <a href="https://cs.daum.net/faq/59/8035.html?faqId=25707" target="_blank" class="ico_login link_help #help">도움말보기</a><!-- 2017-02-15 수정, ico_login으로 클래스명 변경 -->
+                        </div>
+                        <button type="button" class="btn_close #help_close"><span class="ir_wa">X 닫기</span></button><!-- 2017-01-11 수정 -->
+                    </div>
+                <div class="check_security"><!-- 2017-02-15 수정, ico_comm 클래스 제거 --><!-- ip보안 off 상태 check_off 추가 -->
+                    <a href="#none" target="_blank" id="linkSecurity" class="link_protect #ip" title="로그인 IP보안 설정하기" tabindex="5" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'ipsecurity_label']);">IP보안</a>
+                    <button type="button" id="ipSecurity" class="btn_security #ip_on" tabindex="6" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'ipsecurity_onoff']);">
+                        <span class="screen_out">ip 보안 설정</span>ON</button><!-- 2017-02-15 수정, ico_comm 클래스 제거 및 마크업 구조 변경 -->
+                </div>
+            </div>
+            <ul class="list_user">
+                <li class="fst">
+                    <a href="https://member.daum.net/join" class="link_join #registration" tabindex="7" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'join']);">회원가입</a>
+                </li>
+                <li>
+                    <a href="https://member.daum.net/find/id.do" class="link_find #id" tabindex="8" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'findid']);">아이디<span class="screen_out">찾기</span></a>
+                    <span class="ico_dot">&middot;</span>
+                    <a href="https://member.daum.net/find/password.do" class="link_find find_pw #password" tabindex="9" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'findpw']);"> 비밀번호 찾기</a>
+                </li>
+                <li>
+                    <a href="https://www.daum.net" id="btnKakaoLogin" class="ico_login link_kakao #kakao" tabindex="10" onclick="_tiq.push(['__trackEvent', 'loginform_top', 'login_kakao']);">카카오 로그인</a><!-- 2017-02-15 수정, ico_login으로 클래스명 변경 -->
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+    </div>
+</body>
+</html>
+ 
+ 
