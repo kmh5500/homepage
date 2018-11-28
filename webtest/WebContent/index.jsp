@@ -4,12 +4,12 @@
 String id =(String)session.getAttribute("id");
 String grade =(String)session.getAttribute("grade");
 String str = null;
-String title="나의 여행 블로그";
+String title="my home";
 if(id!=null && grade.equals("A")){
 	   title="관리자 페이지";
 	}
 if(id==null){
-str = "메인 페이지 입니다.";
+str = "메인 입니다.";
 }else{
 str = "안녕하세요 "+id+"님!";
 }
